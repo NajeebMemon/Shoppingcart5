@@ -1,0 +1,70 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Simple Shop</h1>
+    <a href="cart.html" class="cart-icon">🛒 Cart (<span id="cart-count">0</span>)</a>
+  </header>
+
+  <main>
+    <div class="item" data-name="Smartphone" data-price="30000">
+      <img src="smartphone.png" height="200" width="250" alt="Smartphone">
+      <h2>Smartphone</h2>
+      <p>Price: PKR 30,000</p>
+      <button onclick="addToCart('Smartphone', 30000)">BUY</button>
+    </div>
+    <div class="item" data-name="Laptop" data-price="75000">
+        <img src="laptop.png" height="200" width="250" alt="Laptop">
+      <h2>Laptop</h2>
+      <p>Price: PKR 75,000</p>
+      <button onclick="addToCart('Laptop', 75000)">BUY</button>
+    </div>
+    <div class="item" data-name="Shoes" data-price="4000">
+        <img src="shoes.png" height="200" width="250" alt="Shoes">
+      <h2>Shoes</h2>
+      <p>Price: PKR 4,000</p>
+      <button onclick="addToCart('Shoes', 4000)">BUY</button>
+    </div>
+    <div class="item" data-name="Watch" data-price="2500">
+        <img src="watch.png" height="200" width="250" alt="Watch">
+      <h2>Watch</h2>
+      <p>Price: PKR 2,500</p>
+      <button onclick="addToCart('Watch', 2500)">BUY</button>
+    </div>
+    <div class="item" data-name="Headphones" data-price="3500">
+        <img src="headphones.png" height="200" width="250" alt="Headphones">
+      <h2>Headphones</h2>
+      <p>Price: PKR 3,500</p>
+      <button onclick="addToCart('Headphones', 3500)">BUY</button>
+    </div>
+  </main>
+
+  <script>
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const index = cart.findIndex(item => item.name === name);
+      if (index > -1) {
+        cart[index].qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cart-count').textContent = count;
+    }
+
+    updateCartCount();
+  </script>
+</body>
+</html>
